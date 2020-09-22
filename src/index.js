@@ -1,8 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './App.js'
 
-ReactDOM.render(
-  <div>hi</div>,
-  document.getElementById('root')
-);
+// let n = 0
+// const App = ()=> React.createElement('div', {className:'red'}, [
+//   n,
+//   React.createElement('button',{onClick:()=>{
+//     n+=1
+//       ReactDOM.render(
+//         App(),
+//         document.getElementById('root')
+//       );
+//
+//     }},'+1')
+// ])
+//
+// ReactDOM.render(
+//   App(),
+//   document.getElementById('root')
+// );
+//
 
+ReactDOM.render(<App />, document.getElementById('root'))
