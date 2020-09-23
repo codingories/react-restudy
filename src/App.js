@@ -21,7 +21,7 @@ class Son extends React.Component {
   }
   addN() {
     this.setState({ n: this.state.n + 1 });
-    // m 会被覆盖为 undefined 吗？,不会，第一层自动会沿用
+    // m 会被覆盖为 undefined 吗？
   }
   addM() {
     this.setState({ m: this.state.m + 1 });
@@ -42,10 +42,13 @@ class Son extends React.Component {
 
 const Grandson = () => {
   const [n, setN] = React.useState(0);
+  const [m, setM] = React.useState(0);
   return (
     <div className="Grandson">
       孙子 n:{n}
-      <button onClick={() => setN(n + 1)}>+1</button>
+      <button onClick={() => setN(n + 1)}>n+1</button>
+      m:{m}
+      <button onClick={() => setM(m + 1)}>m+1</button>
     </div>
   );
 };
