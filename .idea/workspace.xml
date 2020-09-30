@@ -27,6 +27,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
   </component>
   <component name="RunDashboard">
@@ -54,6 +55,7 @@
       <workItem from="1600698745754" duration="2421000" />
       <workItem from="1600786684489" duration="749000" />
       <workItem from="1600869461547" duration="2282000" />
+      <workItem from="1601471959483" duration="2700000" />
     </task>
     <servers />
   </component>
