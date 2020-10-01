@@ -3,32 +3,33 @@ import React, {useState, useEffect} from "react";
 import "./styles.css";
 
 const App = (props) => {
-  const [childVisible, setChildVisible] = useState(true)
-  const hide = ()=>{
-    setChildVisible(false)
+  const [n, setN] = useState(0);
+
+  const onClick = ()=>{
+    setN(n+1)
   }
-  const show = ()=>{
-    setChildVisible(true)
-  }
+
+  const [nUpdateCount, setNUpdateCount] = useState(0)
+
+  useEffect(()=>{
+    setNUpdateCount(x => x +1)
+  },[n])
+
+  useEffect(()=>{
+    if(nUpdateCount>1){
+      console.log('n或者m变了')
+    }
+  }, [nUpdateCount])
+  
   return (
     <div>
-      {childVisible ? <button onClick={hide}>hide</button>:<button onClick={show}>show</button>}
-      {childVisible ? <Child /> : null}
+      {n}
+      <button onClick={onClick}>+1</button>
     </div>
   )
 }
 
 
-const Child = (props)=>{
-  useEffect(()=>{
-    return ()=>{
-      console.log('Child 销毁了')
-    }
-  })
-  return (
-    <div>Child</div>
-  )
-}
 
 
 export default App
