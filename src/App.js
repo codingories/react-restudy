@@ -1,35 +1,20 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 
-import "./styles.css";
+// import "./styles.css";
 
-const App = (props) => {
-  const [n, setN] = useState(0);
-
-  const onClick = ()=>{
-    setN(n+1)
-  }
-
-  const [nUpdateCount, setNUpdateCount] = useState(0)
-
-  useEffect(()=>{
-    setNUpdateCount(x => x +1)
-  },[n])
-
-  useEffect(()=>{
-    if(nUpdateCount>1){
-      console.log('n或者m变了')
-    }
-  }, [nUpdateCount])
-  
+const App = () => {
+  console.log('App 运行了')
+  const [n, setN] = React.useState(0);
+  console.log(`n: ${n}`)
   return (
-    <div>
-      {n}
-      <button onClick={onClick}>+1</button>
+    <div className="App">
+      <p>{n}</p>
+      <p>
+        <button onClick={() => setN(n + 1)}>+1</button>
+      </p>
     </div>
   )
 }
-
-
 
 
 export default App
