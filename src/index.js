@@ -1,21 +1,35 @@
-import React, {useState} from "react";
+import React, {useReducer, useState} from "react";
 import ReactDOM from "react-dom";
 
+const initial = {
+  n: 0
+} // 创建所有值
+
+const reducer = (state, action)=>{
+  if(action.type === 'add'){
+    return {n: state.n + action.number}
+  } else if(action.type === 'mult'){
+    return {n: state.n * 2}
+  } else {
+    throw new Error('unknown type')
+  }
+} // 这里写所有的操作, 这样的好处就是下面的代码就简单了
+
 function App() {
-  const [n,setN] = useState(0)
-  // 写成函数js引擎不会立即解析，减少多余的计算过程, 用处不大，多算一次影响不大
+  const [state, dispatch] = useReducer(reducer, initial)
+  const {n} = state
   const onClick = ()=>{
-    // setN(n+1);
-    // setN(n+2);
-    // n 不能+3,而是+2
-    setN(i=>i+1);
-    setN(i=>i+2);
-    // 这样写就能+3,传一个操作,set里面优先使用函数,除非下面不能用再用上面的写法
+    dispatch({type: 'add', number: 1})
+  }
+  const onClick2 = ()=>{
+    dispatch({type: 'add', number: 2})
   }
   return (
     <div className="App">
       <h1>n: {n}</h1>
-      <button onClick={onClick}>+2</button>
+      <button onClick={onClick}>+1</button>
+      <button onClick={onClick2}>+2</button>
+
     </div>
   );
 }
