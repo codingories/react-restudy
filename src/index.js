@@ -1,26 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 const rootElement = document.getElementById("root");
 
 function App() {
-  const [n, setN] = React.useState(0);
-  const log = ()=> setTimeout(()=> console.log(`n: ${n}`), 3000)
+  const nRef = React.useRef(0); // Ref就是一个很简单的对象。 { current:0 }
+  const log = () => setTimeout(() => console.log(`n: ${nRef.current}`), 1000);
+  const update = React.useState(null)[1];
+  // Vue3里面的current是value
   return (
     <div className="App">
-      <p>{n}</p>
+      <p>{nRef.current} 这里并不能实时更新</p>
       <p>
-        <button onClick={()=>{setN(n+1)}}>+1</button>
+        <button onClick={() => {
+          nRef.current += 1
+          update(nRef.current)
+        }}>
+          +1
+        </button>
         <button onClick={log}>log</button>
-        {/*点击log 3秒后把n打印出n*/}
       </p>
     </div>
   );
 }
-// 两种操作
-// 1. 点击+1再点击log-- 无bug
-// 2. 点击log再点击+1-- 有bug
-// 问题: 为什么log出了旧数据?
-
+// 那我就是要让Ref重新渲染怎么办，React做不到，就是不会重新渲染
+// 用Vue3吧，Vue能做到，所以Vue3很可能会抢走React一部分用户，因为Api更符合人的直觉
 ReactDOM.render(<App />, rootElement);
-
-
