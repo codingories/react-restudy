@@ -1,46 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import ReactDOM from "react-dom";
-import "./styles.css";
-const rootElement = document.getElementById("root");
-
-const themeContext = React.createContext(null);
-// 上下文其实就是一个全局变量,把themeContext理解为一个全局变量
 
 function App() {
-  const [theme, setTheme] = React.useState("red");
+  const [user,setUser] = useState({name:'Frank', age: 18})
+  const onClick = ()=>{
+    setUser({
+      name: 'Jack'
+    })
+  }
   return (
-    <themeContext.Provider value={{ theme, setTheme }}>
-      {/*value的意思是我们对全局变量进行一次赋值,值就是一个对象*/}
-      {/*themeContext.Provider 表示作用域的开始和结束*/}
-      <div className={`App ${theme}`}>
-        <p>{theme}</p>
-        <div>
-          <ChildA />
-        </div>
-        <div>
-          <ChildB />
-        </div>
-      </div>
-    </themeContext.Provider>
-  );
-}
-
-function ChildA() {
-  const { setTheme } = React.useContext(themeContext);
-  return (
-    <div>
-      <button onClick={() => setTheme("red")}>red</button>
+    <div className="App">
+      <h1>{user.name}</h1>
+      <h2>{user.age}</h2>
+      <button onClick={onClick}>Click</button>
     </div>
   );
 }
 
-function ChildB() {
-  const { setTheme } = React.useContext(themeContext);
-  return (
-    <div>
-      <button onClick={() => setTheme("blue")}>blue</button>
-    </div>
-  );
-}
-
+const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
