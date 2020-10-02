@@ -3,34 +3,47 @@ import ReactDOM from 'react-dom';
 
 const rootElement = document.getElementById('root')
 
-let _state
+
+let _state = [];
+let index = 0;
 const myUseState = (initialValue) => {
-  console.log("myUseState run")
-  _state = _state === undefined ? initialValue: _state;
-  const setState = (newValue)=>{
-    _state = newValue
-    render()
-  }
-  return [_state, setState]
+  const currentIndex = index;
+  // 这样写的原因是因为+1之后再return就return的是下一个了,n,m就不会出现再页面上是undefined
+  _state[currentIndex] =
+    _state[currentIndex] === undefined ? initialValue : _state[currentIndex];
+  const setState = (newValue) => {
+    console.log(currentIndex);
+    _state[currentIndex] = newValue;
+    render();
+  };
+  index += 1;
+  return [_state[currentIndex], setState];
 };
 
-const render = ()=>{
-  ReactDOM.render(<App />, rootElement)
-}
+const render = () => {
+  index = 0;
+  // 理论上说每次渲染app之前都需要重置index,这一步是最重要的
+  ReactDOM.render(<App />, rootElement);
+};
 
-const App = () => {
-  console.log('App 运行了')
+function App() {
   const [n, setN] = myUseState(0);
-  console.log(`n:${n}`)
+  const [m, setM] = myUseState(0);
+
   return (
-    <div className="Apps">
+    <div className="App">
       <p>{n}</p>
       <p>
         <button onClick={() => setN(n + 1)}>+1</button>
       </p>
+      <p>{m}</p>
+      <p>
+        <button onClick={() => setM(n + 1)}>+1</button>
+      </p>
     </div>
-  )
+  );
 }
 
+ReactDOM.render(<App />, rootElement);
 
-ReactDOM.render(<App />, rootElement)
+
