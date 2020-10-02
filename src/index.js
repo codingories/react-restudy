@@ -1,48 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-const rootElement = document.getElementById('root')
-
-
-let _state = [];
-let index = 0;
-const myUseState = (initialValue) => {
-  const currentIndex = index;
-  // 这样写的原因是因为+1之后再return就return的是下一个了,n,m就不会出现再页面上是undefined
-  _state[currentIndex] =
-    _state[currentIndex] === undefined ? initialValue : _state[currentIndex];
-  const setState = (newValue) => {
-    console.log(currentIndex);
-    _state[currentIndex] = newValue;
-    render();
-  };
-  index += 1;
-  return [_state[currentIndex], setState];
-};
-
-const render = () => {
-  index = 0;
-  // 理论上说每次渲染app之前都需要重置index,这一步是最重要的
-  ReactDOM.render(<App />, rootElement);
-};
+const rootElement = document.getElementById("root");
 
 function App() {
-  const [n, setN] = myUseState(0);
-  const [m, setM] = myUseState(0);
-
+  const [n, setN] = React.useState(0);
+  const log = ()=> setTimeout(()=> console.log(`n: ${n}`), 3000)
   return (
     <div className="App">
       <p>{n}</p>
       <p>
-        <button onClick={() => setN(n + 1)}>+1</button>
-      </p>
-      <p>{m}</p>
-      <p>
-        <button onClick={() => setM(n + 1)}>+1</button>
+        <button onClick={()=>{setN(n+1)}}>+1</button>
+        <button onClick={log}>log</button>
+        {/*点击log 3秒后把n打印出n*/}
       </p>
     </div>
   );
 }
+// 两种操作
+// 1. 点击+1再点击log-- 无bug
+// 2. 点击log再点击+1-- 有bug
+// 问题: 为什么log出了旧数据?
 
 ReactDOM.render(<App />, rootElement);
 
