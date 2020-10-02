@@ -3,14 +3,15 @@ import ReactDOM from 'react-dom';
 
 const rootElement = document.getElementById('root')
 
+let _state
 const myUseState = (initialValue) => {
   console.log("myUseState run")
-  let state = initialValue;
+  _state = _state === undefined ? initialValue: _state;
   const setState = (newValue)=>{
-    state = newValue
+    _state = newValue
     render()
   }
-  return [state, setState]
+  return [_state, setState]
 };
 
 const render = ()=>{
