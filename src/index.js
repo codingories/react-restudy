@@ -6,11 +6,12 @@ const store = {
   books: null,
   movies: null
 };
-
+// 1. 将数据集中在一个 store 对象
 function reducer(state, action) {
   switch (action.type) {
     case "setUser":
       return { ...state, user: action.user };
+      // 先把之前的状态复制过来，再加上新的user
     case "setBooks":
       return { ...state, books: action.books };
     case "setMovies":
@@ -18,16 +19,19 @@ function reducer(state, action) {
     default:
       throw new Error();
   }
-}
+} // 2. 将所有操作集中在 reducer
 
 const Context = React.createContext(null);
+// 3. 创建一个 Context
 
 function App() {
   const [state, dispatch] = useReducer(reducer, store);
-
+  // 4. 创建对数据的读写 api
   const api = { state, dispatch };
   return (
     <Context.Provider value={api}>
+      {/*5. 将第四步的内容放到第三步的 Context*/}
+      {/*6. 用 Context.Provider 将 Context 提供给所有组件*/}
       <User />
       <hr />
       <Books />
@@ -38,7 +42,10 @@ function App() {
 
 function User() {
   const { state, dispatch } = useContext(Context);
+  {/*7. 各个组件用 useContext 获取读写 API*/}
+  // 注意这里不是方括号，useContext返回一个对象
   useEffect(() => {
+    // useEffect替换useState,useState会在页面每次渲染都执行ajax,useEffect只有在第一次渲染才会调用ajax
     ajax("/user").then(user => {
       console.log("user");
       console.log(user);
@@ -135,5 +142,3 @@ function ajax(path) {
     }, 2000);
   });
 }
-
-// 帮助函数
